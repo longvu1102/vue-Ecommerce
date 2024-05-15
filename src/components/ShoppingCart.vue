@@ -6,11 +6,11 @@
     <div v-else>
       <div v-if="cartItems && cartItems.length == 0">
         <h1 class="empty-cart-message text-center">
-          Your shopping cart is empty, please add items to the cart
+          Giỏ hàng của bạn đang trống, vui lòng thêm sản phẩm vào giỏ hàng
         </h1>
       </div>
       <div v-else>
-        <h2 class="cart-title">Shopping Cart</h2>
+        <h2 class="cart-title">Giỏ hàng</h2>
         <div class="cart-items">
           <div
             v-for="item in cartItems"
@@ -27,24 +27,18 @@
               </div>
               <div class="col-md-6 mt-5">
                 <div class="item-details ml-3">
-                  <span class="product-name font-weight-bold">{{
-                    item.name
-                  }}</span>
+                  <span class="product-name font-weight-bold">{{ item.name }}</span>
                   <br />
-                  <span class="product-size"
-                    >Size: {{ item.selectedSize }}</span
-                  >
+                  <span class="product-size">Size: {{ item.selectedSize }}</span>
                   <br />
-                  <span
-                    class="product-price"
-                    style="font-size: 17px; font-weight: bold"
-                    >Price: {{ item.price.toFixed(2) }}$</span
-                  >
+                  <span class="product-price" style="font-size: 17px; font-weight: bold">
+                    Giá: {{ item.price.toFixed(2) }}$
+                  </span>
                 </div>
               </div>
               <div class="col-md-3 mt-4">
                 <div class="item-actions">
-                  <span>Quantity :</span>
+                  <span>Số lượng :</span>
                   <input
                     type="number"
                     v-model="item.quantity"
@@ -56,7 +50,7 @@
                     @click="confirmRemoveFromCart(item)"
                     class="btn btn-danger remove-button btn-block"
                   >
-                    Remove
+                    Xóa
                   </button>
                 </div>
               </div>
@@ -64,16 +58,16 @@
           </div>
         </div>
         <div class="cart-total text-right">
-          <h4>Total: {{ formattedTotalAmount }}$</h4>
-          <button @click="placeOrderForAll" class="btn-checkout btn-block">
-            Checkout All
+          <h4>Tổng: {{ formattedTotalAmount }}$</h4>
+          <button @click="checkout" class="btn btn-checkout btn-block">
+            Thanh toán
           </button>
         </div>
       </div>
     </div>
   </div>
 </template>
- 
+
 <script>
 export default {
   name: "ShoppingCartComponent",
@@ -116,20 +110,11 @@ export default {
     removeFromCart(productId) {
       this.$store.commit("removeFromCart", productId);
     },
-    async placeOrderForAll() {
+    checkout() {
       if (this.cartItems.length > 0) {
-        try {
-          await this.$store.commit("updateStockAfterPayment", {
-            cartItems: [...this.cartItems],
-          });
-          this.$store.commit("emptyCart");
-          alert("Successfully checked out all items!");
-        } catch (error) {
-          console.error("Error while checking out:", error);
-          alert("An error occurred while checking out, please try again later");
-        }
+        this.$store.dispatch("checkout", this.cartItems);
       } else {
-        alert("Your cart is empty, there are no items to checkout");
+        alert("Giỏ hàng của bạn đang trống, không có sản phẩm để thanh toán");
       }
     },
     updateTotalAmount() {
@@ -154,9 +139,10 @@ export default {
       }
     },
   },
-};
+  }
+
 </script>
- 
+
 <style scoped>
 .quantity-input {
   margin: 10px;
@@ -167,28 +153,32 @@ export default {
   border: 1px solid transparent;
   outline: none;
 }
- 
+
 .quantity-input:focus {
   box-shadow: 0 0 0 2px #f4640b, 0 0 0 2px #f4640b;
 }
+
 .cart-item {
   background-color: #f8f9fa;
   border-radius: 10px;
 }
+
 .cart-item img {
   height: 200px;
   width: 200px;
   object-fit: contain;
   border-radius: 10px;
 }
+
 .cart-title {
   color: #c62b0c;
 }
- 
+
 .quantity-input {
   width: 70px;
 }
-.btn-checkout{
+
+.btn-checkout {
   color: black;
   padding: 10px;
   background-color: #f4640b;
@@ -197,6 +187,7 @@ export default {
   border-radius: 20px;
   margin-bottom: 10px;
 }
+
 .remove-button {
   color: black;
   padding: 10px;
@@ -205,15 +196,16 @@ export default {
   width: 80px;
   border-radius: 20px;
 }
- 
+
 .loading-spinner {
   border: 8px solid #f3f3f3;
   border-top: 8px solid #c62b0c;
 }
- 
+
 .empty-cart-message {
   font-size: 20px;
 }
+
 .loading-spinner {
   border: 8px solid #f3f3f3;
   border-top: 8px solid #c62b0c;
@@ -223,7 +215,7 @@ export default {
   animation: spin 1s linear infinite;
   margin: 50px auto;
 }
- 
+
 @keyframes spin {
   0% {
     transform: rotate(0deg);
@@ -233,4 +225,3 @@ export default {
   }
 }
 </style>
- 

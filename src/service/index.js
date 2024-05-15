@@ -72,13 +72,14 @@ export async function deleteProduct(id) {
   return await fetchData(`Products/${id}`, "DELETE");
 }
 
-// Tìm kiếm sản phẩm theo tên trong API và lọc kết quả bằng biểu thức chính quy
+// Tìm kiếm sản phẩm theo tên trong API và lọc kết quả
 export async function searchProductByName(name) {
   const products = await fetchProducts();
   return products.filter((product) =>
-    product.name.toLowerCase().startsWith(name.toLowerCase())
+    product.name.toLowerCase().includes(name.toLowerCase())
   );
 }
+
 
 // Thêm sản phẩm vào giỏ hàng từ trang tìm kiếm
 // Add a product to the cart
@@ -106,4 +107,25 @@ export async function addToCart(product) {
     console.error("Lỗi khi thêm sản phẩm vào giỏ hàng:", error);
     throw error;
   }
+  async function getUserData() {
+    try {
+      // Gọi hàm fetchUser để lấy thông tin người dùng từ API
+      const userData = await fetchUser();
+      // Kiểm tra xem dữ liệu người dùng đã được lấy thành công chưa
+      if (userData) {
+        console.log('Thông tin người dùng:', userData);
+        // Trả về dữ liệu người dùng nếu cần thiết
+        return userData;
+      } else {
+        console.log('Không có thông tin người dùng.');
+        return null;
+      }
+    } catch (error) {
+      console.error('Lỗi khi lấy thông tin người dùng:', error);
+      throw error;
+    }
+  }
+  
+  // Sử dụng hàm để lấy dữ liệu người dùng khi đã đăng nhập
+  getUserData();
 }

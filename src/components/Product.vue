@@ -1,32 +1,39 @@
 <template>
+  <!-- Component template -->
   <div class="product">
     <div class="container-lg">
-      <h2>{{ category ? `Sản phẩm danh mục: ${category}` : 'All Product' }}</h2>
+      <!-- Hiển thị tiêu đề sản phẩm dựa trên danh mục được chọn hoặc 'All Product' nếu không có danh mục nào được chọn -->
+      <h2>{{ category ? `Sản phẩm danh mục: ${category}` : 'Tất cả sản phẩm' }}</h2>
     </div>
     <div class="container-lg category-selector">
+      <!-- Dropdown để chọn danh mục sản phẩm -->
       <select v-model="selectedCategory" @change="loadProducts">
-        <option value="">All</option>
-        <option value="ao">Shirt&Hoodie</option>
-        <option value="quan">Pants & Trouser</option>
-        <option value="giay">Shoes</option>
+        <option value="">Tất cả</option>
+        <option value="ao">Áo & Hoodie</option>
+        <option value="quan">Quần</option>
+        <option value="giay">Giày</option>
       </select>
     </div>
     <div class="product-danhsach">
+      <!-- Duyệt qua mỗi sản phẩm và hiển thị thông tin sản phẩm -->
       <div v-for="product in filteredProducts" :key="product.id" class="product-item">
         <div class="product-link">
-          <div  class="product-card">
+          <div class="product-card">
+            <!-- Đường dẫn đến trang chi tiết sản phẩm -->
             <router-link :to="'/productdetail/' + product.id">
-              <img :src="require(`@/assets/images/${product.imageUrl}`)" alt="Product Image" class="product-image">
+              <!-- Hiển thị hình ảnh sản phẩm -->
+              <img :src="require(`@/assets/images/${product.imageUrl}`)" alt="Hình ảnh sản phẩm" class="product-image">
             </router-link>
-            
+            <!-- Hiển thị tên và giá của sản phẩm -->
+            <div class="product-details">
               <div class="product-name" style="font-size: 18px;">{{ product.name }}</div>
-              <div class="product-price" style="font-size: 18px;">Price : {{ formatCurrency(product.price) }}</div>
-           
+              <div class="product-price" style="font-size: 18px;">Giá: {{ formatCurrency(product.price) }}</div>
             </div>
           </div>
         </div>
       </div>
     </div>
+  </div>
 </template>
 
 <script>
@@ -37,15 +44,16 @@ export default {
   name: 'ProductComponent',
   data() {
     return {
-      selectedCategory: '',
-      searchQuery: '',
-      products: [],
+      selectedCategory: '', // Biến lưu trữ danh mục được chọn
+      searchQuery: '', // Biến lưu trữ chuỗi tìm kiếm
+      products: [], // Mảng chứa danh sách sản phẩm
     };
   },
   mounted() {
-    this.loadProducts();
+    this.loadProducts(); // Gọi hàm loadProducts khi component được mount
   },
   computed: {
+    // Tính toán danh sách sản phẩm đã lọc dựa trên danh mục được chọn
     filteredProducts() {
       return this.selectedCategory
         ? this.products.filter(product => product.category === this.selectedCategory)
@@ -56,31 +64,31 @@ export default {
     // Hàm để lấy danh sách sản phẩm từ API
     async loadProducts() {
       try {
-        // Gọi hàm fetchProducts từ service/index.js
+        // Gọi hàm fetchProducts từ service/index.js và lưu kết quả vào biến products
         this.products = await fetchProducts();
       } catch (error) {
-        console.error('Error loading products:', error);
+        console.error('Lỗi khi tải sản phẩm:', error);
       }
     },
     // Hàm thêm sản phẩm vào giỏ hàng
     async addToCart(product) {
       if (this.$store.getters.isLoggedIn) {
-        console.log('Adding to cart:', product);
+        console.log('Thêm vào giỏ hàng:', product);
         try {
           // Gọi hàm addToCart từ service/index.js để thêm sản phẩm vào giỏ hàng
           await addToCart(product);
           // Chuyển hướng đến trang giỏ hàng sau khi thêm sản phẩm thành công
           this.$router.push('/cart');
         } catch (error) {
-          console.error('Error adding to cart:', error);
+          console.error('Lỗi khi thêm vào giỏ hàng:', error);
           // Xử lý lỗi khi thêm sản phẩm vào giỏ hàng
           // Ví dụ: Hiển thị thông báo lỗi cho người dùng
         }
       } else {
         // Xử lý trường hợp người dùng chưa đăng nhập
-        // Ví dụ: Chuyển hướng đến trang đăng nhập
+        // Ví dụ: Chuyển hướng đến trang đăng nhập và thông báo cho người dùng
         alert('Vui lòng đăng nhập để thêm sản phẩm vào giỏ hàng');
-        console.log('User not logged in. Redirecting to login page...');
+        console.log('Người dùng chưa đăng nhập. Đang chuyển hướng đến trang đăng nhập...');
         this.$router.push('/login');
       }
     },
@@ -101,7 +109,7 @@ export default {
 <style scoped>
 /* Your Product styles here */
 .category-selector {
-  max-width: 150px; /* Đặt giới hạn chiều rộng tối đa */
+  max-width: 170px; 
   float: left;
 }
 
@@ -130,10 +138,8 @@ export default {
 }
 
 .product-card {
-  
   padding: 10px;
   text-align: center;
-
   transition: box-shadow 0.3s ease; /* Thêm hiệu ứng chuyển động */
 }
 
@@ -146,10 +152,12 @@ export default {
   height: auto;
   margin-bottom: 10px;
 }
+
 .product-image:hover {
   transform: scale(1.1);
   transition: all 0.5s;
 }
+
 .product-details {
   display: flex;
   flex-direction: column;

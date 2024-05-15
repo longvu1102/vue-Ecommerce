@@ -23,7 +23,7 @@
         },
         {
           "size": "L",
-          "instock": 3
+          "instock": 1
         }
       ]
     },
@@ -42,11 +42,11 @@
       "sizes": [
         {
           "size": "S",
-          "instock": 8
+          "instock": 0
         },
         {
           "size": "M",
-          "instock": 9
+          "instock": 6
         },
         {
           "size": "L",
@@ -69,7 +69,7 @@
       "sizes": [
         {
           "size": "S",
-          "instock": 10
+          "instock": 9
         },
         {
           "size": "M",
@@ -150,7 +150,7 @@
       "sizes": [
         {
           "size": "S",
-          "instock": 10
+          "instock": 9
         },
         {
           "size": "M",
@@ -285,7 +285,7 @@
       "sizes": [
         {
           "size": "43",
-          "instock": 7
+          "instock": 6
         },
         {
           "size": "40",
@@ -829,6 +829,9 @@
       "description": "Product 2 Description",
       "instock": 0,
       "size": "42"
+    },
+    {
+      "id": "38f2"
     }
   ],
   "User": [
@@ -863,6 +866,17 @@
       "gender": "Male",
       "address": {
         "street": "longvu"
+      }
+    },
+    {
+      "id": "9d90",
+      "username": "phong",
+      "password": "123456",
+      "phoneNumber": "0777653007",
+      "birthDate": "2024-03-12",
+      "gender": "Male",
+      "address": {
+        "street": "123"
       }
     }
   ]

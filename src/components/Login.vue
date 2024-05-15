@@ -4,7 +4,7 @@
     <div class="collapse navbar-collapse" id="navbarNav">
       <a class="navbar-brand" href="#"><img src="@/assets/images/Nike-Logo.svg" alt=""></a>
       <h3 style="font-weight: bold;"> Login </h3>
-      <!-- Sử dụng lớp mới để căn giữa và đẩy về phía bên phải -->
+     
       <div class="ml-auto-right">
        
       </div>
@@ -111,9 +111,7 @@ export default {
 };
 </script>
 
-<style scoped>
-/* Your CSS styles */
-</style>
+
 
 
 <style scoped>
@@ -200,8 +198,8 @@ p .text-regis:hover{
   position: absolute;
   right: 30px;
   cursor: pointer;
-  z-index: 2; /* Đảm bảo icon nằm trên input */
-  background-color: transparent; /* Đặt màu nền transparent */
+  z-index: 2; 
+  background-color: transparent;
 }
 .list-inline {
   padding: 0;
@@ -256,7 +254,7 @@ p .text-regis:hover{
 .text-danger {
   margin-right: 15px; 
 }
-/* Thêm đoạn mã CSS sau vào phần style của bạn */
+
 .input-group {
   position: relative;
 }
@@ -266,11 +264,11 @@ p .text-regis:hover{
   position: absolute;
   right: 0px;
   cursor: pointer;
-  z-index: 2; /* Đảm bảo icon nằm trên input */
+  z-index: 2;
 }
 
 .form-control {
-  padding-right: 40px; /* Để tránh việc icon che phủ phần nội dung của input */
+  padding-right: 40px;
 }
 
 

@@ -27,7 +27,7 @@
     name: 'QuangCao',
     data() {
       return {
-        countdownDate: new Date("2024-04-29T00:00:00Z"),
+        countdownDate: new Date("2024-10-29T00:00:00Z"),
         days: 0,
         hours: 0,
         minutes: 0,
